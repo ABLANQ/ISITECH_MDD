@@ -1,5 +1,5 @@
 # Lancer GIT
-
+### Commande pour la configuration
 -   Initialisation d'un dépot Git :
 
 ``` sh
@@ -38,7 +38,7 @@ Cette methode se caraterise par trois point clés:
 
 ### L'approche systemique
 
-![alt text](image.png)
+![Alt text](image-1.png)
 
 
 Le systeme de pilotage :
@@ -92,7 +92,7 @@ Organisation réelle des données eb utilisant le modele physique des traitement
 Ici, on apporte les solutions technique de stockage des données et de traitement des données
 On repond a la question : **Comment** les traitements sont-ils effectuées?
 
-#### Des données auw independance fonctionnelles
+#### Des données aux independance fonctionnelles
 
 Pour être intégrées dans un systeme d'info, les données doivent être triées et organisées. On va souvent les classer par type dennées :
 
@@ -108,19 +108,49 @@ Pour être intégrées dans un systeme d'info, les données doivent être triée
 
 Création d'un dictionnaire de données :
 
-![alt text](image.png)
+![Alt text](image-2.png)
 
 ### Les dependances fonctionnelles
 
-Une dépendance fonctionnelle est une relation entre deux attributs d'une table. Elle permet de definir une relation de dependance entre deux attributs d'une table
+Une dépendance fonctionnelle est une relation entre deux attributs d'une table. Elle permet de definir une relation de dependance entre deux attributs d'une table.
 
-image.png
-image.png
-image.png
+Le role d'une dependance fonctionnelle est de permettre de definir une relation de dependance entre deux attributs d'une table:une donnés A depend focntionnellement d'une donnée B lorsque la valeur de B determine la valeur A.
 
-Exercice :
+Pour formaliser une dependance focntionnelle on utilise la notation suivante :
+`Numero adherent (Nom, prenom, code postale, ville, téléphone, date d'adhesion, mail)`
+La partie gauche (numéro adherant) est la `source` de la dependance fcontionnelle.
+LA partie droite designe le `but` de la dependance.
+
+### Les dependance fonctionnelles composes
+
+Si une dependance fonctionnelle qui fait intervenir plus de deux attributs on parle de dependance fonctionnelle composée.
+
+Exemple: Pour connaitre le temps d'un coureur sur une etape donnée il nous faut son numéro ou son nom ainsi que le nom ou le numéro de l'etape.
+
+Formalisation :
+`(numéro coureur, numéro étape)(temps)`
+
+### Les dependance focntionnelle élémentaire
+
+Une dependance fonctionnelle A -> B est élémentaire s'il n'existe pas une donnée C, sous-ensemble de A, decrivant une dependance fcontionnelle type C -> B.
+Exemple :
+-   RefProduit -> LibelleProduit
+-   NumCommande RefProduit -> QuantiteCommanée
+-   <strike>NumCommande RefProduit -> designationProduit</strike>
+
+### Les dependance focntionnelle élémentaire
+"on dit que la dependance fcontionnelle A -> B est directe s'il n'existe aucun attribut C tel que 
+## Sujet TP/TD MCD jour 1
+![Alt text](image-5.png)
+### Bibliothèque 
+![Alt text](image-7.png)
+![Alt text](image-8.png)
+![Alt text](image-6.png)
+
+
 -   Le but de l'exercice est d'elaborer un MCD a partir d'un dictionnaire de données.
-Nous allons introduire les notions d'entite, de relation et de propriétés
+Nous allons introduire les notions d'entite, de relation et de propriétés.
+-   Utilisation de l'application analyseSI pour la création du MDC
 
 #### Les propriétés sont les infos de base d'un SI
 
@@ -129,6 +159,7 @@ Nous allons introduire les notions d'entite, de relation et de propriétés
 #### Les relations 
 
 #### **Les cardinalités**: elles permettent de définir le nombre d'occurences d'une entité par rapport à une autre entité
+![Alt text](image-9.png)
 <br>
 Quelques regles de conception :
 
@@ -136,3 +167,10 @@ Quelques regles de conception :
 -   Toutes les proprietes dependent fonctionnellement de l'identifiant
 -   Le nom d'une propriété ne doit apparaitre qu'une seul fois dans le MCD : si vous avez une entité Elevé et une entité proffesseur, vous ne pouvez pas avoir une propriété nom dans les deux entités. Il faut donc renommer le propriété nom de l'entité Professeur en nomProfesseur par exemple.
 -   Les propriétés issues d'un calcule ne doivent pas apparaitre dans le MCD.
+
+
+### Pour lancer analyseSI avec java: 
+``` bash
+    java -jar .\AnalyseSI-0.80.jar    
+ ```
+
