@@ -23,6 +23,9 @@ git commit -m "votre message de commit"
 ```sh
 git status
 ```
+Acceder au support lorsqu'il est mis a jour :
+
+https://github.com/bendahmanem/ISITECH-2223-B1-MDD/blob/main/Modelisation_de_donn%C3%A9es.md
 
 # Merise
 
@@ -121,7 +124,7 @@ Pour formaliser une dependance focntionnelle on utilise la notation suivante :
 La partie gauche (numéro adherant) est la `source` de la dependance fcontionnelle.
 LA partie droite designe le `but` de la dependance.
 
-### Les dependance fonctionnelles composes
+#### Les dependance fonctionnelles composes
 
 Si une dependance fonctionnelle qui fait intervenir plus de deux attributs on parle de dependance fonctionnelle composée.
 
@@ -130,7 +133,7 @@ Exemple: Pour connaitre le temps d'un coureur sur une etape donnée il nous faut
 Formalisation :
 `(numéro coureur, numéro étape)(temps)`
 
-### Les dependance focntionnelle élémentaire
+#### Les dependance focntionnelle élémentaire
 
 Une dependance fonctionnelle A -> B est élémentaire s'il n'existe pas une donnée C, sous-ensemble de A, decrivant une dependance fcontionnelle type C -> B.
 Exemple :
@@ -138,9 +141,17 @@ Exemple :
 -   NumCommande RefProduit -> QuantiteCommanée
 -   <strike>NumCommande RefProduit -> designationProduit</strike>
 
-### Les dependance focntionnelle élémentaire
-"on dit que la dependance fcontionnelle A -> B est directe s'il n'existe aucun attribut C tel que 
-## Sujet TP/TD MCD jour 1
+#### Les dependance focntionnelle élémentaire direct
+"on dit que la dependance fcontionnelle A -> B est directe s'il n'existe aucun attribut C tel que l'on puisse avoir A -> C et C -> B.
+En d'autre terme, cela signifie que la dependance fcontionnelle entre A et B ne peut pas être obtnue par transitivité."
+
+Exemple :
+-   RefPromo -> NumApprenant         
+-   NumApprenant -> NomApprenant
+-   RefPromo -> NomApprenant : RefPromo -> NumApprenant -> NomApprenant
+
+
+### Sujet TP/TD MCD jour 1
 ![Alt text](image-5.png)
 ### Bibliothèque 
 ![Alt text](image-7.png)
@@ -151,16 +162,35 @@ Exemple :
 -   Le but de l'exercice est d'elaborer un MCD a partir d'un dictionnaire de données.
 Nous allons introduire les notions d'entite, de relation et de propriétés.
 -   Utilisation de l'application analyseSI pour la création du MDC
+### Pour lancer analyseSI avec java: 
+``` bash
+    java -jar .\AnalyseSI-0.80.jar    
+ ```
 
 #### Les propriétés sont les infos de base d'un SI
 
 #### Les entités sont les objets du SI
+![Alt text](image-10.png)
 
+Quelques definitions :
+-   entité forte: une entite qui ne depend pas d'une autre entite pour exister
+-   entite faible: une entite qui depend d'une autre entite pour exister
 #### Les relations 
-
-#### **Les cardinalités**: elles permettent de définir le nombre d'occurences d'une entité par rapport à une autre entité
+![Alt text](image-11.png)
+#### **Les cardinalités**: elles permettent de définir le nombre d'occurences d'une entité par rapport à une autre entité dans le cadre d'une relation.
 ![Alt text](image-9.png)
-<br>
+
+Petit Exemple : 
+![Alt text](image-12.png)
+![Alt text](image-13.png)
+![Alt text](image-14.png)
+
+#### Les relations "porteuses"
+Une relation est dite porteuse si elle possede des proprietés
+
+#### Les relations "reflexives"
+Une relation est dite reflexive si elle relie une 
+
 Quelques regles de conception :
 
 -   Toute entité doit avoir un identifiant
@@ -168,9 +198,211 @@ Quelques regles de conception :
 -   Le nom d'une propriété ne doit apparaitre qu'une seul fois dans le MCD : si vous avez une entité Elevé et une entité proffesseur, vous ne pouvez pas avoir une propriété nom dans les deux entités. Il faut donc renommer le propriété nom de l'entité Professeur en nomProfesseur par exemple.
 -   Les propriétés issues d'un calcule ne doivent pas apparaitre dans le MCD.
 
+#### Les contrainte d'integrité fcontionnelle (CIF)
 
-### Pour lancer analyseSI avec java: 
-``` bash
-    java -jar .\AnalyseSI-0.80.jar    
- ```
+Définitions : une CIF est définie par le fait qu'une des entités de l'association est completement determinée par la connaissance d'une ou plusieurs entités participant a l'association.
+
+Expemple :
+
+Une salle peut contenir 0 ou plusieurs ordinateurs. Un ordinateur existe dans une et une seule salle. 
+Dans ce type de type de relation une CIF existe si on a une cardinalité 1,1.
+
+### Modèle Logique des données (MLD)
+
+Le MLD est la suite du processus Merise, On se rapproche un peu plus de la base de données.
+
+#### Cas simple
+
+Partons du MCD suivant :
+![Alt text](image-18.png)
+
+Nous arrivons au MDL suivant :
+![Alt text](image-17.png)
+
+L'`entité` qui possède la cardinalite 1
+,1 ou 0,1 absorbe l'identifiant de l'entite la plus forte (0,n ou 1,n). Cet identifiant devient alors une clé etrengere 
+
+#### Cas (0,n), (0,n) ou (1,n) (1,n)
+
+Partons du MCD suivant : 
+![Alt text](image-19.png)
+
+Dans le cas ou la `cardinalité max` est n des deux cotés, on crée une entite intermediaire qui va contenir les deux clée etrangères des deux entités.
+![Alt text](image-20.png)
+
+Continuons avec le MCD suivent :
+![Alt text](image-21.png)
+
+One obtient le MLD suivant en suivant la meme logique :
+![Alt text](image-22.png)  
+
+#### Cas d'une relation reflexive
+
+Partons du MCD suivent ;
+![Alt text](image-23.png)
+
+![Alt text](image-24.png)
+
+#### Regles de passage du MCD au MDL
+
+Règles simples de passage du MCD au MLD
+L’entité qui possède la cardinalité maximale égale à 1 recevra l’identifiant ou les identifiants des entités ayant les cardinalités maximales les plus fortes.
+
+ 
+
+Les relations ayant toutes leurs entités reliées avec des cardinalités maximales supérieures à 1 se transformeront en entité en absorbant les identifiants des entités jointes.
+
+ 
+
+Toute relation porteuse de propriétés se transformera en entité et absorbera comme clé étrangère les identifiants des entités qui lui sont liées.
+
+ 
+
+Toute relation réflexive se transformera en entité et absorbera comme clé étrangère l’identifiant de l’entité qui lui est liée.
+
+#### Petie exercice pratique :
+
+A partrir du MCD suivant construisez le MLD :
+
+![Alt text](image-15.png)
+
+Voici le MLD :
+
+![Alt text](image-25.png)
+
+
+### Modele phisyque de données (MDP)
+
+Voici le schema relationnel correspondant au MLD precedent :
+
+Diplômes (Diplomes)
+
+Possède (#NumEmployé, #Diplôme, Date d’obtention)
+
+Employés (NumEmployé, Nom, Prénom, Adresse, Code Postal, Ville, Téléphone)
+
+Tables (NumTable, Capacité)
+
+Date (Date)
+
+Service (TypeService, Désignation)
+
+Boissons Diverses (NumBoissons, Désignation, Prix de vente)
+
+Contenir (#NumCommande, #NumBoissons, Quantité)
+
+Commande (NumCommande, #Numemployé, #Date, #TypeService, #NumTable)
+
+Comprend (#NumMenu, #NumCommande, Quantité)
+
+Menus (NumMenu, Libellé, Prix de vente)
+
+Constitué (#NumMenu, #NumPlat)
+
+Constituer (#NumCommande, #NumPlat, Quantité)
+
+Sélectionner (#NumCommande, #NumVin, Quantité)
+
+Carte des vins (NumVin, Nom du vin, Millesime, Prix de vente)
+
+Carte des plats (NumPlat, LibelléPlat, Prix de vente, #NumType)
+
+Type des plats (NumType, Désignation)
+
+Bouteilles (NumBouteille, Date Achat, Prix d’achat, # NumVin, #NumViticulteur)
+
+Viticulteur (NumViticulteur, Nom viticulteur, Prénom viticulteur, Adresse viticulteur, Code postal, Ville, Téléphone)
+
+**ET**
+```sql
+CREATE TABLE CARTE_DES_VINS
+   (
+   NUMVIN INTEGER(2) NOT NULL ,
+   NOM_DU_VIN CHAR(40)   ,
+   MILLESIME INTEGER(2)  ,
+   PRIX_DE_VENTE REAL(5,2)
+,
+    PRIMARY KEY (NUMVIN) CONSTRAINT PK_CARTE_DES_VINS
+   );
+
+CREATE TABLE BOUTEILLES
+   (
+   NUMVITICULTEUR INTEGER(2) NOT NULL ,
+   NUMVIN INTEGER(2) NOT NULL ,
+   NUMBOUTEILLE INTEGER(2) NOT NULL ,
+   DATE_ACHAT DATE(8) ,
+   PRIX_D_ACHAT REAL(5,2)
+,
+    PRIMARY KEY (NUMVITICULTEUR, NUMVIN, NUMBOUTEILLE) CONSTRAINT
+PK_BOUTEILLES
+   );
+
+
+CREATE TABLE VITICULTEUR
+   (
+   NUMVITICULTEUR INTEGER(2) NOT NULL ,
+   NOM_VITICULTEUR CHAR(20) ,
+   PRÉNOM_VITICULTEUR CHAR(20) ,
+   ADRESSE_VITICULTEUR CHAR(40) ,
+   CODE_POSTAL CHAR(5) ,
+   VILLE CHAR(40) ,
+   TÉLÉPHONE CHAR(15)
+,
+    PRIMARY KEY (NUMVITICULTEUR) CONSTRAINT PK_VITICULTEUR
+   );
+   ```
+
+
+   ### Exercices
+
+   #### Exercice 1
+
+   MCD :
+   ![Alt text](image-26.png)
+
+   MLD :
+   ![Alt text](image-27.png)
+
+   MDP :
+
+     Date (Date_Date)  
+     Catégorie (id_categorie_Catégorie_, type_categorie_Catégorie_)  
+     Produit (NumProduit_Produit, id_categorie_Catégorie_) 
+     Vente Direct (NumVente, Date, NumProduit)
+
+     SQL :
+
+     ```sql
+     CREATE TABLE Vente_Direct 
+     (NumVente_Vente Direct INT AUTO_INCREMENT NOT NULL, 
+     Date_Date DATETIME, 
+     NumProduit_Produit VARCHAR, 
+     PRIMARY KEY (NumVente) CONSTRAINT PK_Vente_Direct
+     );  
+     
+     CREATE TABLE Date 
+     (Date_Date DATETIME AUTO_INCREMENT NOT NULL, 
+     PRIMARY KEY (Date_) CONSTRAINT PK_Date
+     );  
+     
+     CREATE TABLE Catégorie 
+     (id_categorie_Catégorie  INT AUTO_INCREMENT NOT NULL, 
+     type_categorie_Catégorie  VARCHAR, 
+     PRIMARY KEY (id_categorie) CONSTRAINT PK_Catégorie
+     );  
+     
+     CREATE TABLE Produit 
+     (NumProduit_Produit INT AUTO_INCREMENT NOT NULL, 
+     id_categorie_Catégorie  INT, 
+     PRIMARY KEY (NumProduit) CONSTRAINT PK_Produit
+     );  
+     
+     ALTER TABLE Vente_Direct ADD CONSTRAINT FK_Vente_Direct_Date_Date FOREIGN KEY (Date_Date) REFERENCES Date (Date_Date); 
+     
+     ALTER TABLE Vente_Direct ADD CONSTRAINT FK_Vente_Direct_NumProduit_Produit FOREIGN KEY (NumProduit_Produit) REFERENCES Produit (NumProduit_Produit); 
+     
+     ALTER TABLE Produit ADD CONSTRAINT FK_Produit_id_categorie_Catégorie_ FOREIGN KEY (id_categorie_Catégorie_) REFERENCES Catégorie_ (id_categorie_Catégorie_); 
+     ```
+
+
 
