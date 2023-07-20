@@ -397,12 +397,59 @@ CREATE TABLE VITICULTEUR
      PRIMARY KEY (NumProduit) CONSTRAINT PK_Produit
      );  
      
-     ALTER TABLE Vente_Direct ADD CONSTRAINT FK_Vente_Direct_Date_Date FOREIGN KEY (Date_Date) REFERENCES Date (Date_Date); 
+     ALTER TABLE Vente_Direct 
+     ADD CONSTRAINT FK_Vente_Direct_Date_Date FOREIGN KEY (Date_Date) REFERENCES Date (Date_Date); 
      
-     ALTER TABLE Vente_Direct ADD CONSTRAINT FK_Vente_Direct_NumProduit_Produit FOREIGN KEY (NumProduit_Produit) REFERENCES Produit (NumProduit_Produit); 
+     ALTER TABLE Vente_Direct 
+     ADD CONSTRAINT FK_Vente_Direct_NumProduit_Produit FOREIGN KEY (NumProduit_Produit) REFERENCES Produit (NumProduit_Produit); 
      
-     ALTER TABLE Produit ADD CONSTRAINT FK_Produit_id_categorie_Catégorie_ FOREIGN KEY (id_categorie_Catégorie_) REFERENCES Catégorie_ (id_categorie_Catégorie_); 
+     ALTER TABLE Produit 
+     ADD CONSTRAINT FK_Produit_id_categorie_Catégorie_ FOREIGN KEY (id_categorie_Catégorie_) REFERENCES Catégorie_ (id_categorie_Catégorie_); 
      ```
 
+## Les formes normales (FN)
+
+Ensemble des regles qui a pour but d'eviter les anomalies au sein des BDDR. 
+Pour appliquer les concepts des formes anormales il est necessaire de connaitre les trois premières formes normales.
 
 
+### Forme normal (1FN)
+
+Une relation est en première forme normal si :
+-  Tous les attributs ne contiennent pas de valeurs repetitives
+
+Exemple :
+Clients (Num, Nom, Prenom, Adresse, Telephone)
+
+
+
+### Forme normal 2 (2FN)   
+
+Une relation est en deuxieme forme normal si :
+
+-  Elle est en 1FN
+-  Si tous les attribus qui ne sont pas des clés ne dépendent pas d'une partie de la clé primaire
+
+Exemple :
+
+Commande(NumClient, CodeArticle, Date, QteCommande, Designation)
+
+Image here
+
+### Forme normale  (3FN) :
+
+Une relation est en troiseieme forme normal si :
+-  Elle est en deuxieme forme normale
+-  Si toutes les dépendences fcontionnelles sont directes
+
+Exemple :
+
+Commande(NumCommande, #CodeClient, #RefArticle)
+
+### Les diagrammes des flux
+
+Les diagrammes des flux permettent demodéliser les flux d'infomrations entre les acteurs du systeme d'information et les acteurs du systeme operant.
+
+Quelques définitions:
+-  Domaine d'étude: le périmetre d'une activite d'une entreprise, d'une activité spécifique
+-  
