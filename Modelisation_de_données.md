@@ -1,15 +1,15 @@
 # Lancer GIT
 ### Commande pour la configuration
--   Initialisation d'un dépot Git :
+-   Initialisation d'un dépot Git (Se mettre sur le dossier sur laquelle on veut mettre le débot git):
 
 ``` sh
 git init
 ```
 
--   Pour ajouter des fichiers non suivis :
+-   Pour ajouter des fichiers non suivis (Etre sur le dossier en question):
 
 ```sh
-git add
+git add .
 ```
 
 -   Pour sauvegarder votre travail :
@@ -407,6 +407,90 @@ CREATE TABLE VITICULTEUR
      ADD CONSTRAINT FK_Produit_id_categorie_Catégorie_ FOREIGN KEY (id_categorie_Catégorie_) REFERENCES Catégorie_ (id_categorie_Catégorie_); 
      ```
 
+   #### Exercice 2
+
+   MCD :
+   ![Alt text](image-34.png)
+
+   MLD : 
+   ![Alt text](image-38.png)
+
+   MPD :
+   Ensembles(CodeEnsemble, Désignation) 
+
+   Sous-Ensembles(CodeSousEnsemble, Désignation, Longueur, Largeur, Hauteur, Prix_Unitaire) 
+
+   Composants(CodeComposant, Désignation, Prix_Unitaire) 
+
+   LienEnsSE(#CodeEnsemble, #CodeSousEnsemble, Qté) 
+
+   LienEnsComposant(#CodeEnsemble, #CodeComposant, Qté) 
+
+   LienSEComposant(#CodeSousEnsemble, #CodeComposant, Qté) 
+
+   ```sql
+   CREATE TABLE Ensembles 
+   (CodeEnsemble_Ensembles INT(10) AUTO_INCREMENT NOT NULL, 
+   Désignation_Ensembles VARCHAR(200), 
+   PRIMARY KEY (CodeEnsemble_Ensembles) CONSTRAINT Ensembles 
+   );
+
+   CREATE TABLE Sous-Ensembles 
+   (CodeSousEnsemble_Sous-Ensembles INT(50) AUTO_INCREMENT NOT NULL, 
+   Désignation_Sous-Ensembles VARCHAR, 
+   Longueur_Sous-Ensembles INT, 
+   Largeur_Sous-Ensembles INT, 
+   Hauteur_Sous-Ensembles INT, 
+   Prix_Unitaire_Sous-Ensembles FLOAT, 
+   PRIMARY KEY (CodeSousEnsemble_Sous-Ensembles) CONSTRAINT Sous-Ensemble
+   );  
+   
+   CREATE TABLE Composants 
+   (CodeComposant_Composants INT AUTO_INCREMENT NOT NULL, 
+   Désignation_Composants VARCHAR, 
+   Prix_Unitaire_Composants FLOAT, 
+   PRIMARY KEY (CodeComposant_Composants) CONSTRAINT Composants
+   );
+     
+   CREATE TABLE LienEnsSE 
+   (CodeEnsemble_Ensembles INT(10) AUTO_INCREMENT NOT NULL, 
+   CodeSousEnsemble_Sous-Ensembles INT(10) NOT NULL, 
+   Qté_LienEnsSE INT, 
+   PRIMARY KEY (CodeEnsemble_Ensembles,  CodeSousEnsemble_Sous-Ensembles) CONSTRAINT LienEnsSe
+   );  
+   
+   CREATE TABLE LienEnsComposant 
+   (CodeEnsemble_Ensembles INT(10) AUTO_INCREMENT NOT NULL, 
+   CodeComposant_Composants INT(10) NOT NULL, 
+   Qté_LienEnsComposant INT, 
+   PRIMARY KEY (CodeEnsemble_Ensembles,  CodeComposant_Composants) CONSTRAINT LienEnsComposant
+   );  
+   
+   CREATE TABLE LienSEComposant 
+   (CodeSousEnsemble_Sous-Ensembles INT(50) AUTO_INCREMENT NOT NULL, 
+   CodeComposant_Composants INT(50) NOT NULL, 
+   PRIMARY KEY (CodeSousEnsemble_Sous-Ensembles,  CodeComposant_Composants) CONSTRAINT LienSEComposant
+   );  
+   
+   ALTER TABLE LienEnsSE 
+   ADD CONSTRAINT FK_LienEnsSE_CodeEnsemble_Ensembles FOREIGN KEY (CodeEnsemble_Ensembles) REFERENCES Ensembles (CodeEnsemble_Ensembles); 
+   
+   ALTER TABLE LienEnsSE 
+   ADD CONSTRAINT FK_LienEnsSE_CodeSousEnsemble_Sous-Ensembles FOREIGN KEY (CodeSousEnsemble_Sous-Ensembles) REFERENCES Sous-Ensembles (CodeSousEnsemble_Sous-Ensembles); 
+   
+   ALTER TABLE LienEnsComposant 
+   ADD CONSTRAINT FK_LienEnsComposant_CodeEnsemble_Ensembles FOREIGN KEY (CodeEnsemble_Ensembles) REFERENCES Ensembles (CodeEnsemble_Ensembles); 
+   
+   ALTER TABLE LienEnsComposant 
+   ADD CONSTRAINT FK_LienEnsComposant_CodeComposant_Composants FOREIGN KEY (CodeComposant_Composants) REFERENCES Composants (CodeComposant_Composants); 
+   
+   ALTER TABLE LienSEComposant 
+   ADD CONSTRAINT FK_LienSEComposant_CodeSousEnsemble_Sous-Ensembles FOREIGN KEY (CodeSousEnsemble_Sous-Ensembles) REFERENCES Sous-Ensembles (CodeSousEnsemble_Sous-Ensembles); 
+   
+   ALTER TABLE LienSEComposant 
+   ADD CONSTRAINT FK_LienSEComposant_CodeComposant_Composants FOREIGN KEY (CodeComposant_Composants) REFERENCES Composants (CodeComposant_Composants);
+   ```
+
 ## Les formes normales (FN)
 
 Ensemble des regles qui a pour but d'eviter les anomalies au sein des BDDR. 
@@ -421,7 +505,8 @@ Une relation est en première forme normal si :
 Exemple :
 Clients (Num, Nom, Prenom, Adresse, Telephone)
 
-
+![Alt text](image-28.png)
+![Alt text](image-29.png)
 
 ### Forme normal 2 (2FN)   
 
@@ -434,7 +519,8 @@ Exemple :
 
 Commande(NumClient, CodeArticle, Date, QteCommande, Designation)
 
-Image here
+![Alt text](image-30.png)
+![Alt text](image-31.png)
 
 ### Forme normale  (3FN) :
 
@@ -446,10 +532,58 @@ Exemple :
 
 Commande(NumCommande, #CodeClient, #RefArticle)
 
+![Alt text](image-32.png)
+
 ### Les diagrammes des flux
 
 Les diagrammes des flux permettent demodéliser les flux d'infomrations entre les acteurs du systeme d'information et les acteurs du systeme operant.
 
 Quelques définitions:
 -  Domaine d'étude: le périmetre d'une activite d'une entreprise, d'une activité spécifique
--  
+-  L'acteur: une personne, un serveice, une entreprise, un systeme informatique qui intervient dans le domaine d'étude au moyen d'un flux d'information
+-  Les flux: les informations qui circulent entre les acteurs, représenté par un fleche et porte un nom et peut etre numéroté(Par soucis de chronologie)
+
+Représentation graphique :
+
+![Alt text](image-33.png)
+
+Quelques règles a respecter :
+
+-  Un flux ne peut pas etre bidirectionnel
+-  Un flux ne doit pas être reflexif
+-  On ne représente pas les flux entre les acteurs externes
+
+## UML
+
+UML: Unified Modeling Language (Language de modélisation unifié) est un language de modélisation de données. UML a ete normalié en 1997 par l'OMG (Object Management Group). Son but est de mettre en forme les concepts orientés au travers de diagramme.
+
+UML propose 13 diagrammes dependants de façon hierarchique et se complétant:
+
+1. Les diagrammes statiques : Ils permettent de modéliser la structure d'un système
+-  DIagramme de classe
+-  Diagramme d'objet
+-  Diagramme de composants
+-  Diagramme de deploiment
+-  Diagramme de paquetages
+-  DIagramme de structure composite
+
+2. Les fiagrammes comportementaux:
+-  DIagramme des cas d'usage
+-  Diagramme état-transitions
+-  Diagramme d'activité
+
+3. Les diagrammes dynamiques:
+-  Diagramme de séquences
+-  Diagramme de communication
+-  Diagramme global d'interraction
+-  Diagramme de temps
+
+### Analogie Merise / UML
+Le MCD et le diagramme de classes partagent beaucoup de points communs. Les différences majeures apparaissent dans le côté objet d’UML. Cependant, au niveau du processus d’analyse, le diagramme de classes se rapproche plus du modèle logique des données. Le langage UML pour représenter une base de données ne passe pas d’un état correspondant à un MCD à un MLD. Il faut donc à l’analyste une bonne approche ou vision de la base de données pour la représenter sans faille en langage UML. Le découpage MCD, MLD apporte plus de sécurité, à ce niveau-là, qu’UML.
+
+![Alt text](image-35.png)
+![Alt text](image-36.png)
+1. Cas du MCD et du diagramme des classes :
+
+![Alt text](image-37.png)
+
