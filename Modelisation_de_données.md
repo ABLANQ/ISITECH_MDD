@@ -23,6 +23,15 @@ git commit -m "votre message de commit"
 ```sh
 git status
 ```
+Pour "push" le travail:
+
+```sh
+git remote add origin git@github.com:ABLANQ/ISITECH_MDD.git -- Liens vers ton depot sur GitHub
+```
+puis
+```sh
+git push
+```
 Acceder au support lorsqu'il est mis a jour :
 
 https://github.com/bendahmanem/ISITECH-2223-B1-MDD/blob/main/Modelisation_de_donn%C3%A9es.md
